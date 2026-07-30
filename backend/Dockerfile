@@ -1,0 +1,17 @@
+FROM golang:1.26-alpine
+
+WORKDIR /app
+
+RUN apk add --no-cache git
+
+# Instala o Air para hot reload
+RUN go install github.com/air-verse/air@latest
+
+COPY go.mod ./
+RUN go mod download
+
+COPY . .
+
+EXPOSE 8080
+
+CMD ["air"]
